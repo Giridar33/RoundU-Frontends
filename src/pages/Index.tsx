@@ -1,16 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import MobileLayout from "@/components/MobileLayout";
+import RoleSelectionScreen from "@/screens/RoleSelectionScreen";
+import LoginScreen from "@/screens/LoginScreen";
+import LocationScreen from "@/screens/LocationScreen";
+import HomeScreen from "@/screens/HomeScreen";
+import ServicesScreen from "@/screens/ServicesScreen";
+import ProviderListScreen from "@/screens/ProviderListScreen";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+type Screen = "role" | "login" | "location" | "home" | "services" | "providers";
+
+const Index = () => {
+  const [screen, setScreen] = useState<Screen>("role");
+
+  const renderScreen = () => {
+    switch (screen) {
+      case "role":
+        return <RoleSelectionScreen onSelect={() => setScreen("login")} />;
+      case "login":
+        return <LoginScreen onLogin={() => setScreen("location")} onBack={() => setScreen("role")} />;
+      case "location":
+        return <LocationScreen onDetected={() => setScreen("home")} />;
+      case "home":
+        return (
+          <HomeScreen
+            onNavigate={(s) => setScreen(s as Screen)}
+          />
+        );
+      case "services":
+        return <ServicesScreen onBack={() => setScreen("home")} onSelect={() => setScreen("providers")} />;
+      case "providers":
+        return <ProviderListScreen onBack={() => setScreen("home")} />;
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
+    <MobileLayout>
+      {renderScreen()}
+    </MobileLayout>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
