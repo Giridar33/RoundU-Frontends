@@ -10,10 +10,10 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
   const [phone, setPhone] = useState("");
 
   return (
-    <div className="min-h-full flex flex-col px-6 py-8 gradient-bg">
+    <div className="min-h-full flex flex-col px-6 py-8 bg-background">
       <button
         onClick={onBack}
-        className="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-foreground hover:text-accent transition-colors active:scale-95"
+        className="w-10 h-10 rounded-xl bg-input border border-border flex items-center justify-center text-foreground hover:text-primary transition-colors active:scale-95"
       >
         <ArrowLeft size={20} />
       </button>
@@ -21,7 +21,7 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
       <div className="mt-10 mb-8 animate-fade-in">
         <h1 className="text-3xl font-extrabold text-foreground leading-tight">
           Welcome to<br />
-          <span className="text-gradient-accent">Roundu</span>
+          <span className="text-primary">Roundu</span>
         </h1>
         <p className="text-muted-foreground mt-3 text-sm">
           Enter your phone number to continue
@@ -43,7 +43,7 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
             value={phone}
             onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
             placeholder="Enter your number"
-            className="w-full pl-24 pr-4 py-4 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-base"
+            className="w-full pl-24 pr-4 py-4 rounded-2xl bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all text-base"
           />
         </div>
       </div>
@@ -51,10 +51,10 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
       <button
         onClick={onLogin}
         disabled={phone.length < 10}
-        className="mt-6 w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed gradient-accent text-accent-foreground shadow-glow animate-fade-in-up flex items-center justify-center gap-2"
+        className="mt-6 w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-secondary animate-fade-in-up flex items-center justify-center gap-2"
         style={{ animationDelay: "0.3s", opacity: 0 }}
       >
-        Continue
+        Next
         <ArrowRight size={18} />
       </button>
 
@@ -68,7 +68,7 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
           {["Google", "Apple"].map((provider) => (
             <button
               key={provider}
-              className="flex-1 py-3.5 rounded-2xl glass-card text-sm font-semibold text-foreground hover:border-accent/30 transition-all active:scale-[0.98]"
+              className="flex-1 py-3.5 rounded-2xl bg-input border border-border text-sm font-semibold text-foreground hover:border-primary/30 transition-all active:scale-[0.98]"
             >
               {provider}
             </button>
