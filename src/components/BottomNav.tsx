@@ -8,13 +8,13 @@ interface BottomNavProps {
 const navItems = [
   { id: "home", label: "Home", icon: Home },
   { id: "bookings", label: "Bookings", icon: CalendarCheck },
-  { id: "subscription", label: "Premium", icon: Crown },
+  { id: "subscription", label: "Subscription", icon: Crown },
   { id: "profile", label: "Profile", icon: User },
 ];
 
 const BottomNav = ({ active, onNavigate }: BottomNavProps) => {
   return (
-    <div className="absolute bottom-0 left-0 right-0 glass-card border-t border-border px-2 pt-2 pb-6">
+    <div className="absolute bottom-0 left-0 right-0 bg-card border-t border-border px-2 pt-2 pb-6">
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = active === item.id;
@@ -23,13 +23,13 @@ const BottomNav = ({ active, onNavigate }: BottomNavProps) => {
               key={item.id}
               onClick={() => onNavigate(item.id)}
               className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-200 active:scale-95 ${
-                isActive ? "text-accent" : "text-muted-foreground hover:text-foreground"
+                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <item.icon size={22} strokeWidth={isActive ? 2.5 : 2} />
               <span className="text-[10px] font-semibold">{item.label}</span>
               {isActive && (
-                <div className="w-1 h-1 rounded-full bg-accent mt-0.5" />
+                <div className="w-1 h-1 rounded-full bg-primary mt-0.5" />
               )}
             </button>
           );
