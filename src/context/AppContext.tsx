@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, ReactNode, useCallback } from "r
 import {
   Booking, Provider, ProviderRequest,
   initialProviderRequests, initialCompletedJobs,
+  providers as allProviders,
 } from "@/data/mockData";
 
 type Role = "customer" | "provider" | null;
@@ -161,10 +162,8 @@ const AppContext = createContext<Ctx | null>(null);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  // dynamic lookup avoids stale imports
-  const { providers } = require("@/data/mockData");
   const selectedProvider = state.selectedProviderId
-    ? providers.find((p: Provider) => p.id === state.selectedProviderId) ?? null
+    ? allProviders.find((p) => p.id === state.selectedProviderId) ?? null
     : null;
 
   return (
