@@ -1,13 +1,18 @@
 import { User, Wrench, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useApp } from "@/context/AppContext";
 
-interface RoleSelectionScreenProps {
-  onSelect: (role: string) => void;
-}
+const RoleSelect = () => {
+  const navigate = useNavigate();
+  const { dispatch } = useApp();
 
-const RoleSelectionScreen = ({ onSelect }: RoleSelectionScreenProps) => {
+  const select = (role: "customer" | "provider") => {
+    dispatch({ type: "SET_ROLE", role });
+    navigate(role === "customer" ? "/location" : "/provider", { replace: true });
+  };
+
   return (
     <div className="min-h-full flex flex-col px-6 py-10 bg-background">
-      {/* Logo */}
       <div className="flex items-center gap-2 mb-4 animate-fade-in">
         <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
           <span className="text-primary-foreground font-extrabold text-lg">R</span>
@@ -25,9 +30,8 @@ const RoleSelectionScreen = ({ onSelect }: RoleSelectionScreenProps) => {
       </div>
 
       <div className="flex flex-col gap-4 flex-1">
-        {/* Customer Card */}
         <button
-          onClick={() => onSelect("customer")}
+          onClick={() => select("customer")}
           className="group bg-primary rounded-2xl p-6 text-left transition-all duration-300 hover:bg-secondary active:scale-[0.98] animate-fade-in-up shadow-card"
           style={{ animationDelay: "0.2s", opacity: 0 }}
         >
@@ -43,9 +47,8 @@ const RoleSelectionScreen = ({ onSelect }: RoleSelectionScreenProps) => {
           </p>
         </button>
 
-        {/* Provider Card */}
         <button
-          onClick={() => onSelect("provider")}
+          onClick={() => select("provider")}
           className="group bg-primary rounded-2xl p-6 text-left transition-all duration-300 hover:bg-secondary active:scale-[0.98] animate-fade-in-up shadow-card relative"
           style={{ animationDelay: "0.35s", opacity: 0 }}
         >
@@ -72,4 +75,4 @@ const RoleSelectionScreen = ({ onSelect }: RoleSelectionScreenProps) => {
   );
 };
 
-export default RoleSelectionScreen;
+export default RoleSelect;

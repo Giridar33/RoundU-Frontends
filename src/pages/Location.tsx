@@ -1,29 +1,20 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MapPin, Shield, Crosshair, Wifi } from "lucide-react";
 
-interface LocationScreenProps {
-  onDetected: () => void;
-}
-
-const LocationScreen = ({ onDetected }: LocationScreenProps) => {
+const Location = () => {
+  const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 60);
+      setProgress((p) => (p >= 100 ? 100 : p + 2));
+    }, 50);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="min-h-full flex flex-col items-center justify-center px-6 py-10 bg-background">
-      {/* Animated location pulse */}
       <div className="relative mb-12 animate-fade-in">
         <div className="absolute inset-0 w-32 h-32 rounded-full bg-primary/10 animate-pulse-ring" />
         <div className="absolute inset-0 w-32 h-32 rounded-full bg-primary/5 animate-pulse-ring" style={{ animationDelay: "0.5s" }} />
@@ -34,28 +25,21 @@ const LocationScreen = ({ onDetected }: LocationScreenProps) => {
         </div>
       </div>
 
-      <h2 className="text-2xl font-extrabold text-foreground mb-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-        Detecting your location
-      </h2>
-      <p className="text-sm text-muted-foreground text-center mb-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+      <h2 className="text-2xl font-extrabold text-foreground mb-2">Detecting your location</h2>
+      <p className="text-sm text-muted-foreground text-center mb-8">
         Finding the best professionals near you
       </p>
 
-      {/* Progress bar */}
-      <div className="w-full max-w-xs mb-10 animate-fade-in" style={{ animationDelay: "0.35s" }}>
+      <div className="w-full max-w-xs mb-10">
         <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all duration-100 ease-linear"
-            style={{ width: `${progress}%` }}
-          />
+          <div className="h-full bg-primary rounded-full transition-all duration-100 ease-linear" style={{ width: `${progress}%` }} />
         </div>
         <p className="text-xs text-muted-foreground text-center mt-3">
           {progress < 100 ? `${progress}% — Pinpointing...` : "Location found!"}
         </p>
       </div>
 
-      {/* Trust indicators */}
-      <div className="flex gap-6 animate-fade-in mb-8" style={{ animationDelay: "0.4s" }}>
+      <div className="flex gap-6 mb-8">
         {[
           { icon: Shield, label: "Secure" },
           { icon: Crosshair, label: "Precise" },
@@ -71,7 +55,7 @@ const LocationScreen = ({ onDetected }: LocationScreenProps) => {
       </div>
 
       <button
-        onClick={onDetected}
+        onClick={() => navigate("/home", { replace: true })}
         disabled={progress < 100}
         className="w-full max-w-xs py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-base hover:bg-secondary active:scale-[0.98] transition-all disabled:opacity-50"
       >
@@ -81,4 +65,4 @@ const LocationScreen = ({ onDetected }: LocationScreenProps) => {
   );
 };
 
-export default LocationScreen;
+export default Location;

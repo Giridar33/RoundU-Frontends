@@ -1,18 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Phone, ArrowRight } from "lucide-react";
+import { useApp } from "@/context/AppContext";
 
-interface LoginScreenProps {
-  onLogin: () => void;
-  onBack: () => void;
-}
-
-const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
+const Login = () => {
+  const navigate = useNavigate();
+  const { dispatch } = useApp();
   const [phone, setPhone] = useState("");
+
+  const handleNext = () => {
+    dispatch({ type: "SET_PHONE", phone });
+    navigate("/otp");
+  };
 
   return (
     <div className="min-h-full flex flex-col px-6 py-8 bg-background">
       <button
-        onClick={onBack}
+        onClick={() => navigate(-1)}
         className="w-10 h-10 rounded-xl bg-input border border-border flex items-center justify-center text-foreground hover:text-primary transition-colors active:scale-95"
       >
         <ArrowLeft size={20} />
@@ -23,9 +27,7 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
           Welcome to<br />
           <span className="text-primary">Roundu</span>
         </h1>
-        <p className="text-muted-foreground mt-3 text-sm">
-          Enter your phone number to continue
-        </p>
+        <p className="text-muted-foreground mt-3 text-sm">Enter your phone number to continue</p>
       </div>
 
       <div className="animate-fade-in-up" style={{ animationDelay: "0.15s", opacity: 0 }}>
@@ -49,7 +51,7 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
       </div>
 
       <button
-        onClick={onLogin}
+        onClick={handleNext}
         disabled={phone.length < 10}
         className="mt-6 w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-secondary animate-fade-in-up flex items-center justify-center gap-2"
         style={{ animationDelay: "0.3s", opacity: 0 }}
@@ -68,6 +70,7 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
           {["Google", "Apple"].map((provider) => (
             <button
               key={provider}
+              onClick={() => { setPhone("9999999999"); }}
               className="flex-1 py-3.5 rounded-2xl bg-input border border-border text-sm font-semibold text-foreground hover:border-primary/30 transition-all active:scale-[0.98]"
             >
               {provider}
@@ -79,4 +82,4 @@ const LoginScreen = ({ onLogin, onBack }: LoginScreenProps) => {
   );
 };
 
-export default LoginScreen;
+export default Login;
